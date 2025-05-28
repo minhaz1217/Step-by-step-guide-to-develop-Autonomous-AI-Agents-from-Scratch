@@ -1,19 +1,13 @@
-from openai import OpenAI
 import os
-from dotenv import load_dotenv
-
-
-load_dotenv(override=True)
-
-openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+from azure_open_ai import openAi
 
 
 def generate_text_basic(
     prompt: str,
-    model="gpt-3.5-turbo",
+    model=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
     system_prompt: str = "You are a helpful bot that answers with max 3 lines.",
 ):
-    response = openai.chat.completions.create(
+    response = openAi.chat.completions.create(
         model=model,
         messages=[
             {"role": "system", "content": system_prompt},
